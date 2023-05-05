@@ -14,6 +14,8 @@
 
 
 module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
+							  input					vga_clk,
+							  input blank,
                        output logic [7:0]  Red, Green, Blue );
     
     logic ball_on;
@@ -30,11 +32,21 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
      this single line is quite powerful descriptively, it causes the synthesis tool to use up three
      of the 12 available multipliers on the chip!  Since the multiplicants are required to be signed,
 	  we have to first cast them from logic to int (signed by default) before they are multiplied). */
+	
+	
+    int DistX, DistY, Size, Sizex, Sizey;
+	 
+	 //new
+	 logic [3:0] palette_red, palette_green, palette_blue;
+	 logic [3:0] palette2_red, palette2_green, palette2_blue;
+
+	 
 	  
-    int DistX, DistY, Size;
 	 assign DistX = DrawX - BallX;
     assign DistY = DrawY - BallY;
     assign Size = Ball_size;
+	 
+	 
 	  
     always_comb
     begin:Ball_on_proc
@@ -46,18 +58,61 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
        
     always_comb
     begin:RGB_Display
-        if ((ball_on == 1'b1)) 
+        if ((ball_on == 1'b1) && (palette2_red < 4'b1111) && (palette2_green < 4'b1111) && (palette2_blue < 4'b1111)) 
         begin 
-            Red = 8'hff;
-            Green = 8'h55;
-            Blue = 8'h00;
-        end       
+		  
+			
+				Red[7:4] = palette2_red;
+				Red[3:0] = palette2_red;
+				
+					
+				
+            Green[7:4] = palette2_green;
+				Green[3:0] = palette2_green;
+				
+					
+				
+            Blue[7:4] = palette2_blue;
+				Blue[3:0] = palette2_blue;
+	
+			end       
         else 
         begin 
-            Red = 8'h00; 
-            Green = 8'h00;
-            Blue = 8'h7f - DrawX[9:3];
+            Red[7:4] = palette_red;
+				Red[3:0] = palette_red;
+            Green[7:4] = palette_green;
+				Green[3:0] = palette_green;
+            Blue[7:4] = palette_blue;
+				Blue[3:0] = palette_blue;
+				
+				
+				
         end      
     end 
+	
+
+// sprite rendering for background/mario/enemies is all here
+
+mahrio_example backgrnd ( // background sprites
+	.vga_clk (vga_clk),
+	.DrawX   (DrawX), 
+	.DrawY   (DrawY),
+	.blank   (blank),
+	.red     (palette_red),
+	.green   (palette_green),
+	.blue    (palette_blue)
+);
+
+mario_example mario ( // mario sprite
+	.vga_clk (vga_clk),
+	.DrawX   (DrawX), 
+	.DrawY   (DrawY),
+	.XOffset (320 - DrawX),
+	.blank   (blank),
+	.red     (palette2_red),
+	.green   (palette2_green),
+	.blue    (palette2_blue)
+);
+
     
 endmodule
