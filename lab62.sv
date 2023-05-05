@@ -115,6 +115,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign {Reset_h}=~ (KEY[0]);
 
 	//Our A/D converter is only 12 bit
+	
+	//(wyatt had to comment these out)
+	
 	assign VGA_R = Red[7:4];
 	assign VGA_B = Blue[7:4];
 	assign VGA_G = Green[7:4];
@@ -157,10 +160,21 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.keycode_wire_export(keycode)
 		
 	 );
+	 
 
 
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 vga_controller vga(.Clk(MAX10_CLK1_50),.Reset(Reset_h),.hs(VGA_HS),.vs(VGA_VS),.pixel_clk(VGA_Clk),.blank(blank),.sync(sync),.DrawX(drawxsig),.DrawY(drawysig));
-color_mapper cm(.BallX(ballxsig),.BallY(ballysig),.DrawX(drawxsig),.DrawY(drawysig),.Ball_size(ballsizesig),.Red(Red),.Green(Green),.Blue(Blue));
+color_mapper cm(.BallX(ballxsig),.BallY(ballysig),.DrawX(drawxsig),.DrawY(drawysig),.Ball_size(40),.vga_clk(VGA_Clk),.blank(blank),.Red(Red),.Green(Green),.Blue(Blue));
 ball baller(.Reset(Reset_h),.frame_clk(VGA_VS),.keycode,.BallX(ballxsig),.BallY(ballysig),.BallS(ballsizesig) );
+
+/*mahrio_example mahrio ( // the generated example. in this case, the image was called "pic"
+	.vga_clk (VGA_clk),
+	.DrawX   (drawxsig), 
+	.DrawY   (drawysig),
+	.blank   (blank),
+	.red     (VGA_R),
+	.green   (VGA_G),
+	.blue    (VGA_B)
+);*/
 endmodule
