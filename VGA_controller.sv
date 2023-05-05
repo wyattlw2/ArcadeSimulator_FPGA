@@ -123,3 +123,4 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
     
 
 endmodule
+
