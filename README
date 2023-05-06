@@ -1,4 +1,4 @@
-end my suffering
+To display the game map on the screen, switch 0 must be flipped to a high position. The default "title screen" is a panel of sidesteppers. Running the game involves appropriate setup in Quartus.
 
-(jk its mario)
+NOTE: If you have memory instantiation errors, go to "Assignments -> Devices -> Configurations" and change the image compression settings to allow for memory initialization in the on-chip memory.
 
