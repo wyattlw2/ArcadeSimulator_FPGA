@@ -2,3 +2,5 @@ To display the game map on the screen, switch 0 must be flipped to a high positi
 
 NOTE: If you have memory instantiation errors, go to "Assignments -> Devices -> Configurations" and change the image compression settings to allow for memory initialization in the on-chip memory.
 
+The "game" is a giant ball of Mario that warps across the screen and devours everything in its path. It will stay within the lower and upper bounds of the game map. It is capable of entering through the left side and exiting out the right side like in the 1983 arcade edition of Mario Bros.
+
