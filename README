@@ -1,6 +1,4 @@
-To display the game map on the screen, switch 0 must be flipped to a high position. The default "title screen" is a panel of sidesteppers. Running the game involves appropriate setup in Quartus.
+To start the game, switch 0 must be flipped to a high position. The default "title screen" is a panel of sidesteppers. To control the player character, a USB keyboard is required. The character can be moved in the cardinal directions corresponding to the A and D keys, and pressing spacebar will make the character jump. Running the game involves appropriate setup in Quartus and requires using the DE-10 Lite.
 
-NOTE: If you have memory instantiation errors, go to "Assignments -> Devices -> Configurations" and change the image compression settings to allow for memory initialization in the on-chip memory.
-
-The "game" is a giant ball of Mario that warps across the screen and devours everything in its path. It will stay within the lower and upper bounds of the game map. It is capable of entering through the left side and exiting out the right side like in the 1983 arcade edition of Mario Bros.
+If you have memory instantiation errors, go to "Assignments -> Devices -> Configurations" and change the image compression settings to allow for memory initialization in the on-chip memory.
 
